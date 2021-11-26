@@ -1,0 +1,265 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "College Mgmt System",
+        "description": "This is a simple College Management System.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "apiteam@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "v1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "LocalHost"
+        }
+    ],
+    "paths": {
+        "/deparments": {
+            "get": {
+                "tags": [
+                    "department"
+                ],
+                "summary": "List Departments",
+                "description": "List all departments",
+                "operationId": "departmentList",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "object",
+                                            "example": "[{'id':1,'name':'Department 1','created_at':'2021-09-27T13:14:03.000000Z','updated_at':'2021-09-27T13:14:03.000000Z'}]"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/marks/{dept_id}": {
+            "get": {
+                "tags": [
+                    "mark"
+                ],
+                "summary": "List Marks",
+                "description": "Get each student Mark List for a particular department",
+                "operationId": "markList",
+                "parameters": [
+                    {
+                        "name": "dept_id",
+                        "in": "path",
+                        "description": "Department Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "422": {
+                        "description": "Exception Caught",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unprocessible Entity"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "object",
+                                            "example": "[{'id':1,'name':'Student1','dept_id':1,'created_at':'2021-09-27T13:14:26.000000Z','updated_at':'2021-09-27T13:14:26.000000Z','marks':[{'id':1,'stu_id':1,'sub_id':1,'sem_id':1,'mark':'50','total':'75','created_at':'2021-09-27T13:15:28.000000Z','updated_at':'2021-09-27T13:15:28.000000Z'},{'id':13,'stu_id':1,'sub_id':1,'sem_id':2,'mark':'53','total':'75','created_at':'2021-09-27T14:12:20.000000Z','updated_at':'2021-09-27T14:12:20.000000Z'},{'id':25,'stu_id':1,'sub_id':1,'sem_id':3,'mark':'53','total':'75','created_at':'2021-09-27T14:12:20.000000Z','updated_at':'2021-09-27T14:12:20.000000Z'}]}]"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/students": {
+            "get": {
+                "tags": [
+                    "student"
+                ],
+                "summary": "List Students",
+                "description": "List all students with departments",
+                "operationId": "studentList",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "object",
+                                            "example": "[{'id':1,'name':'Student 1','dept_id':1,'created_at':'2021-09-27T13:14:26.000000Z','updated_at':'2021-09-27T13:14:26.000000Z','department':{'id':1,'name':'Department 1','created_at':'2021-09-27T13:14:03.000000Z','updated_at':'2021-09-27T13:14:03.000000Z'}}]"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "student"
+                ],
+                "summary": "Create Students",
+                "description": "Create a new student with a particular department",
+                "operationId": "studentCreate",
+                "requestBody": {
+                    "description": "Provide student details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "department": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Exception Caught",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unprocessible Entity"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "example": "[{'id':21,'name':'Student 7','dept_id':2,'created_at':'2021-09-28T05:35:31.000000Z','updated_at':'2021-09-28T05:35:31.000000Z','department':{'id':2,'name':'Department 2','created_at':'2021-09-27T13:14:03.000000Z','updated_at':'2021-09-27T13:14:03.000000Z'}}]"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Student has been created"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "mark",
+            "description": "Everything about marks",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "student",
+            "description": "Everything about students",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "department",
+            "description": "Everything about departments",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "mark",
+            "description": "Everything about marks",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    },
+    "security": [
+        []
+    ]
+}
